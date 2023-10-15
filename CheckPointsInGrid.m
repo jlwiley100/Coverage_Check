@@ -1,4 +1,4 @@
-function [sucess,failure,numSpecs] =CheckPointsInGrid(lati,latNext,longes,spec)
+function [sucess,failure] =CheckPointsInGrid(lati,latNext,longes,spec)
    
    sucess = 0;
    failure = 0;
@@ -16,10 +16,10 @@ function [sucess,failure,numSpecs] =CheckPointsInGrid(lati,latNext,longes,spec)
        specLonges = spec(firstSpecIndex:lastSpecIndex,2);
        
         for j = 1:1:(length(longes)-1)
-            inRange = find(specLonges > longes(j) & specLonges < longes(j+1));
-            numSpecs = numSpecs + length(inRange);
+            inRange = find(specLonges > longes(j) & specLonges < longes(j+1),1,'first');
+  
             if ~isempty(inRange)
-            sucess = sucess +1;
+                sucess = sucess +1;
             else
                 failure = failure +1;
             end
@@ -28,7 +28,6 @@ function [sucess,failure,numSpecs] =CheckPointsInGrid(lati,latNext,longes,spec)
        if isempty(firstSpecIndex)
           failure = length(longes)-1;
        else
-           numSpecs = numSpecs +1;
            sucess = 1;
            failure = length(longes)-2;
        end
