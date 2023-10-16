@@ -3,7 +3,7 @@ function [sucess,failure] =CheckPointsInGrid(lati,latNext,longes,spec)
    sucess = 0;
    failure = 0;
    numSpecs = 0;
-   firstSpecIndex = find(spec(:,1) > lati,2,'first');
+   firstSpecIndex = find(spec(:,1) > lati & spec(:,1) < latNext,2,'first');
    if length(firstSpecIndex) > 1
        
        firstSpecIndex = firstSpecIndex(1);
