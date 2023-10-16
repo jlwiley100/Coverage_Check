@@ -1,6 +1,6 @@
 % Generate Longitude Grid Points For a certain lattitude
 function longes = GenerateGridPoints(lat1,lat2)
-res = 25;
+res = 12.5;
 latAVG = (abs(lat1)+abs(lat2))/2;
 degPerKm = 1/(111.320*cosd(latAVG));
 degPer25km = res*degPerKm;

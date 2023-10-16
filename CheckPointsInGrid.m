@@ -8,13 +8,9 @@ function [sucess,failure,lastSpecIndex] =CheckPointsInGrid(lati,latNext,longes,s
    
    %find the last specular point in the list within the lattiude band
    %if there are no lastSpec Index will be one less than firstSpecIndex
-  
-   i = firstSpecIndex;
-   while(i <= length(spec(:,1)) && spec(i,1) < latNext)
-        i = i+1;
-   end
-       lastSpecIndex = i-1;
-
+    
+   lastSpecIndex = find(spec(:,1) > lati & spec(:,1) < latNext,1,'last');
+   
    %if there are at least 2 specular points
    if lastSpecIndex-firstSpecIndex >= 1
        
