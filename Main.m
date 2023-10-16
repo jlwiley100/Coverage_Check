@@ -18,11 +18,14 @@ latPer25Km = res*latPerKm;
 
 lati = -90;
 
+% run through each lattitude band of 25 km
 while lati < (90 - latPer25Km)
     
     latNext = lati+latPer25Km;
+    % find the longitude bands at that lattitude
     longes = GenerateGridPoints(lati,latNext);
     
+    %find how many grid spaces were sucess and failures
     [si,fi,lastSpecIndex] = CheckPointsInGrid(lati,latNext,longes,spec,lastSpecIndex);
     success_count = success_count +si;
     fail_count = fail_count + fi;
