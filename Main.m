@@ -6,6 +6,7 @@ n_rx = 6;
 %initialization
 success_count = 0;
 fail_count = 0; 
+lastSpecIndex = 0;
 
 %get sim data
 output_folder = '6_1000_80_6_45/';
@@ -22,7 +23,7 @@ while lati < (90 - latPer25Km)
     latNext = lati+latPer25Km;
     longes = GenerateGridPoints(lati,latNext);
     
-    [si,fi] = CheckPointsInGrid(lati,latNext,longes,spec);
+    [si,fi,lastSpecIndex] = CheckPointsInGrid(lati,latNext,longes,spec,lastSpecIndex);
     success_count = success_count +si;
     fail_count = fail_count + fi;
     lati = latNext;
