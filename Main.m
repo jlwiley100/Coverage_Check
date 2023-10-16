@@ -11,7 +11,7 @@ fail_count = 0;
 output_folder = '6_1000_80_6_45/';
 spec = loadSpecDat(output_folder,n_rx);
 
-res = 25;
+res = 12.5;
 latPerKm = 1/110.574;
 latPer25Km = res*latPerKm;
 
@@ -29,4 +29,4 @@ while lati < (90 - latPer25Km)
     
 end
 
-PercentCoverage = success_count/(sucess_count+fail_count);
+PercentCoverage = success_count/(success_count+fail_count);
