@@ -4,6 +4,9 @@ clear; clc;
 
 %% PARAMETERS
 
+% incidence angle constraint for high RCG
+angle = 90;
+
 % number of recievers
 n_rx = 6;
 
@@ -16,7 +19,7 @@ fail_count = 0;
 
 %get sim data
 output_folder = 'outputs/';
-spec = loadSpecDat(strcat(output_folder, target_folder, "/"),n_rx);
+spec = loadSpecDat(strcat(output_folder, target_folder, "/"),n_rx,angle);
 
 res = 25;
 latPerKm = 1/110.574;
