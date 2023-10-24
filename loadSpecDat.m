@@ -43,10 +43,11 @@ for iRx = 1 : nRx
         % LLA of specular points
         lats = temp(:,9);
         longs = temp(:,10);
-        specs = [specs;
-                lats,longs];
+        underAng = temp(:,12) <= 45;
+        newSpecs = [lats,longs];
+        newSpecs = nonzeros(newSpecs .* underAng);
         
-        
+        specs = [specs; newSpecs];
         
     end
 end

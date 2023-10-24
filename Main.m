@@ -8,10 +8,10 @@ success_count = 0;
 fail_count = 0; 
 
 %get sim data
-output_folder = '6_1000_80_6_45/';
+output_folder = '6_1000_80_1 14sp3/';
 spec = loadSpecDat(output_folder,n_rx);
 
-res = 12.5;
+res = 25;
 latPerKm = 1/110.574;
 latPer25Km = res*latPerKm;
 
