@@ -1,3 +1,4 @@
 .DS_Store
 *.asv
 /6_1000_80_6_45
+outputs/**

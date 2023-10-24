@@ -1,6 +1,7 @@
 function specs = loadSpecDat(output_folder,n_rx)
 
 specs = [];
+underAngs = [];
 %% PARAMETERS
 RxName = 'CYG';
 TxName = {'Galileo'};
@@ -20,7 +21,8 @@ for iRx = 1 : nRx
         longs = temp(:,10);
         specs = [specs;
                 lats,longs];
-        
+        underAng = temp(:,12) <= 45;
+        underAngs = [underAngs; underAng, underAng];
         
         
     end
@@ -44,14 +46,15 @@ for iRx = 1 : nRx
         lats = temp(:,9);
         longs = temp(:,10);
         underAng = temp(:,12) <= 45;
-        newSpecs = [lats,longs];
-        newSpecs = nonzeros(newSpecs .* underAng);
-        
-        specs = [specs; newSpecs];
-        
+        underAngs = [underAngs; underAng, underAng];
+        specs = [specs; lats, longs];  
     end
 end
 
+latsZero = nonzeros(specs(:,1).*underAngs(:, 1));
+lonZero = nonzeros(specs(:,2).*underAngs(:, 1));
+
+specs = [latsZero lonZero];
 specs = sortrows(specs,1);
 end
 

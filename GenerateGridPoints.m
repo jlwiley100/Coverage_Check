@@ -1,6 +1,5 @@
 % Generate Grid Points
-function longes = GenerateGridPoints(lat1,lat2)
-res = 25;
+function longes = GenerateGridPoints(lat1,lat2, res)
 latAVG = (abs(lat1)+abs(lat2))/2;
 degPerKm = 1/(111.320*cosd(latAVG));
 degPer25km = res*degPerKm;
