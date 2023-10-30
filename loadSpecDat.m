@@ -11,6 +11,7 @@ RxName = 'CYG';
 TxName = {'Galileo'};
 nRx = n_rx;
 nTx = length(TxName);
+cTc = 3*10e8/(1.023);
 %% GET DIRECTORIES
 dir_out = output_folder;
 %% READ DATA
@@ -38,10 +39,13 @@ for iRx = 1 : nRx
         lats = temp(:,9);
         longs = temp(:,10);
         alts = temp(:,11);
-
+        angs = temp(:,17);
+        
         % FFZ of specular points
-        a = temp(:, 15) ./ 1000;
-        b = temp(:, 16) ./ 1000;
+       
+        a = ((cTc.*alts)/(cosd(angs).^3)).^(0.5);
+        b = ((cTc.*alts)/(cosd(angs))).^(0.5);
+        
         ffz = pi.*a.*b;
 
         [Xsp, Ysp, Zsp] = geodetic2ecef(wgs84, lats, longs, alts);
@@ -90,10 +94,12 @@ for iRx = 1 : nRx
         lats = temp(:,9);
         longs = temp(:,10);
         alts = temp(:,11);
+        angs = temp(:,17);
 
         % FFZ of specular points
-        a = temp(:, 15) ./ 1000;
-        b = temp(:, 16) ./ 1000;
+        a = ((cTc.*alts)/(cosd(angs).^3)).^(0.5);
+        b = ((cTc.*alts)/(cosd(angs))).^(0.5);
+        
         ffz = pi.*a.*b;
 
         [Xsp, Ysp, Zsp] = geodetic2ecef(wgs84, lats, longs, alts);

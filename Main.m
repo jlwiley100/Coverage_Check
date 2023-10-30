@@ -11,7 +11,7 @@ angle = 60;
 n_rx = 6;
 
 % target folder in outputs folder
-target_folder = '6_500_80_1';
+target_folder = '6_1000_80_6 12sp/';
 
 %% INITIALIZATION
 success_count = 0;
