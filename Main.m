@@ -5,19 +5,19 @@ clear; clc;
 %% PARAMETERS
 
 % incidence angle constraint for high RCG
-angle = 90;
+angle = 60;
 
 % number of recievers
 n_rx = 6;
 
 % target folder in outputs folder
-target_folder = '6_1000_80_1 14sp';
+target_folder = '6_500_80_1';
 
 %% INITIALIZATION
 success_count = 0;
 fail_count = 0; 
 
-%get sim data
+% get sim data
 output_folder = 'outputs/';
 spec = loadSpecDat(strcat(output_folder, target_folder, "/"),n_rx,angle);
 
