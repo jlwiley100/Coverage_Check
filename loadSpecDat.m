@@ -1,11 +1,13 @@
-function specs = loadSpecDat(output_folder,n_rx, angleConstraint)
+function specs = loadSpecDat(output_folder,n_rx)
 
 wgs84 = wgs84Ellipsoid("meter");
 
 specs = [];
-underAngs = [];
 RCGs = [];
 FFZs = [];
+
+rcgConstraint = 3; % RCG
+ffzConstraint = 625; % km^2
 
 %% PARAMETERS
 RxName = 'CYG';
@@ -46,11 +48,11 @@ for iRx = 1 : nRx
 
         angs = temp(:,17);
 
-        h = sind(90-angs);
-
         % FFZ of specular points
         a = temp(:, 15) ./ 1000;
         b = temp(:, 16) ./ 1000;
+
+        % Calculations
         %a = ((cTc.*alts)./(cosd(angs).^3)).^(0.5);
         %b = ((cTc.*alts)./(cosd(angs))).^(0.5);
         
@@ -67,8 +69,6 @@ for iRx = 1 : nRx
         % LLA of specular points
         lats = temp(:,9);
         longs = temp(:,10);
-        underAng = temp(:,17) <= angleConstraint;
-        underAngs = [underAngs; underAng];
         specs = [specs; lats, longs];  
     end
 end
@@ -78,8 +78,12 @@ RCGs = RCGs(:) * (10^27);
 
 % Filter RCGs less than or equal to 3 and FFZs greater than or equal to 625
 % km^2
-latsZero = nonzeros(specs(:,1) .* (RCGs > 3) .* (FFZs < 625));
-lonZero = nonzeros(specs(:,2) .* (RCGs > 3) .* (FFZs < 625));
+latsZero = nonzeros( ...
+    specs(:,1) .* (RCGs > rcgConstraint) .* (FFZs < ffzConstraint) ...
+    );
+lonZero = nonzeros( ...
+    specs(:,2) .* (RCGs > rcgConstraint) .* (FFZs < ffzConstraint) ...
+    );
 
 specs = [latsZero lonZero];
 specs = sortrows(specs,1);

@@ -11,7 +11,7 @@ angle = 60;
 n_rx = 8;
 
 % target folder in outputs folder
-target_folder = '8_500_80_1_linux';
+target_folder = '8_450_80_1';
 
 %% INITIALIZATION
 success_count = 0;
@@ -19,7 +19,7 @@ fail_count = 0;
 
 % get sim data
 output_folder = 'outputs/';
-spec = loadSpecDat(strcat(output_folder, target_folder, "/"),n_rx,angle);
+spec = loadSpecDat(strcat(output_folder, target_folder, "/"),n_rx);
 
 res = 25;
 latPerKm = 1/110.574;
