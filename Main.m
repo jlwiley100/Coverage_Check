@@ -11,7 +11,7 @@ angle = 60;
 n_rx = 8;
 
 % target folder in outputs folder
-target_folder = '8_450_80_1';
+target_folder = '8_500_80_1_linux';
 
 %% INITIALIZATION
 success_count = 0;

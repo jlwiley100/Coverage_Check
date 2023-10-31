@@ -14,7 +14,7 @@ RxName = 'CYG';
 TxName = {'GPS', 'Galileo'};
 nRx = n_rx;
 nTx = length(TxName);
-cTc = 3*10e8/(1.023);
+cTc = 3*1e5/(1.023*1e6);
 
 %% GET DIRECTORIES
 dir_out = output_folder;
@@ -48,27 +48,34 @@ for iRx = 1 : nRx
 
         angs = temp(:,17);
 
-        % FFZ of specular points
-        a = temp(:, 15) ./ 1000;
-        b = temp(:, 16) ./ 1000;
-
-        % Calculations
-        %a = ((cTc.*alts)./(cosd(angs).^3)).^(0.5);
-        %b = ((cTc.*alts)./(cosd(angs))).^(0.5);
-        
-        ffz = pi.*a.*b;
-
         [Xsp, Ysp, Zsp] = geodetic2ecef(wgs84, lats, longs, alts);
 
+        % Meters
         Rts = sqrt((Xtx - Xsp).^2 + (Ytx - Ysp).^2 + (Ztx - Zsp).^2);
         Rsr = sqrt((Xrx - Xsp).^2 + (Yrx - Ysp).^2 + (Zrx - Zsp).^2);
+
+        % Specular FFZ of specular points
+        %a = temp(:, 15) ./ 1000;
+        %b = temp(:, 16) ./ 1000;
+
+        % Calculations
+        % km
+        % TODO: Check if Garrison's diffuse FFZ seems correct
+        h = Rsr .* sind(90 - angs) ./ 1000;
+        a = sqrt((cTc.*h)./(cosd(angs).^3));
+        b = sqrt((cTc.*h)./(cosd(angs)));
+        
+        ffz = pi.*a.*b;
 
         RCGs = [RCGs; 10.^(gains./10)./(Rts.^2 .* Rsr.^2)];
         FFZs = [FFZs; ffz];
 
+        % Latitudes and longitudes at exactly 0 will not be included. To
+        % ensure that they will be, we perturb the latitude and longitude
+        % by a small value.
         % LLA of specular points
-        lats = temp(:,9);
-        longs = temp(:,10);
+        lats = temp(:,9) + 0.0001;
+        longs = temp(:,10) + 0.0001;
         specs = [specs; lats, longs];  
     end
 end
@@ -79,11 +86,9 @@ RCGs = RCGs(:) * (10^27);
 % Filter RCGs less than or equal to 3 and FFZs greater than or equal to 625
 % km^2
 latsZero = nonzeros( ...
-    specs(:,1) .* (RCGs > rcgConstraint) .* (FFZs < ffzConstraint) ...
-    );
+    specs(:,1) .* (RCGs > rcgConstraint) .* (FFZs < ffzConstraint));
 lonZero = nonzeros( ...
-    specs(:,2) .* (RCGs > rcgConstraint) .* (FFZs < ffzConstraint) ...
-    );
+    specs(:,2) .* (RCGs > rcgConstraint) .* (FFZs < ffzConstraint));
 
 specs = [latsZero lonZero];
 specs = sortrows(specs,1);
