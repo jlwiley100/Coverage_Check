@@ -73,11 +73,13 @@ for iRx = 1 : nRx
     end
 end
 
+% Multiply all RCG values
 RCGs = RCGs(:) * (10^27);
-FFZs = FFZs(:) < 625;
 
-latsZero = nonzeros(specs(:,1) .* (RCGs > 3) .* FFZs);
-lonZero = nonzeros(specs(:,2) .* (RCGs > 3) .* FFZs);
+% Filter RCGs less than or equal to 3 and FFZs greater than or equal to 625
+% km^2
+latsZero = nonzeros(specs(:,1) .* (RCGs > 3) .* (FFZs < 625));
+lonZero = nonzeros(specs(:,2) .* (RCGs > 3) .* (FFZs < 625));
 
 specs = [latsZero lonZero];
 specs = sortrows(specs,1);
