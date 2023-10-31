@@ -8,10 +8,10 @@ clear; clc;
 angle = 60;
 
 % number of recievers
-n_rx = 6;
+n_rx = 8;
 
 % target folder in outputs folder
-target_folder = '6_500_80_1 GaussianAntenna/';
+target_folder = '8_500_80_1_windows';
 
 %% INITIALIZATION
 success_count = 0;
@@ -44,4 +44,4 @@ end
 PercentCoverage = success_count/(success_count+fail_count) * 100;
 
 %% OUTPUT
-fprintf("Done! Percentage Coverage: %2.2f%%\n", PercentCoverage);
+fprintf("Done! Percentage Coverage of %s: %2.2f%%\n", target_folder, PercentCoverage);

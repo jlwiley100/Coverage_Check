@@ -41,13 +41,16 @@ for iRx = 1 : nRx
         lats = temp(:,9);
         longs = temp(:,10);
         alts = temp(:,11);
+        
+        gains = temp(:, 13);
+
         angs = temp(:,17);
 
         h = sind(90-angs);
 
         % FFZ of specular points
-        a = temp(:, 15);
-        b = temp(:, 16);
+        a = temp(:, 15) ./ 1000;
+        b = temp(:, 16) ./ 1000;
         %a = ((cTc.*alts)./(cosd(angs).^3)).^(0.5);
         %b = ((cTc.*alts)./(cosd(angs))).^(0.5);
         
@@ -58,7 +61,7 @@ for iRx = 1 : nRx
         Rts = sqrt((Xtx - Xsp).^2 + (Ytx - Ysp).^2 + (Ztx - Zsp).^2);
         Rsr = sqrt((Xrx - Xsp).^2 + (Yrx - Ysp).^2 + (Zrx - Zsp).^2);
 
-        RCGs = [RCGs; 10^(13.8/10)./(Rts.^2 .* Rsr.^2)];
+        RCGs = [RCGs; 10.^(gains./10)./(Rts.^2 .* Rsr.^2)];
         FFZs = [FFZs; ffz];
 
         % LLA of specular points
@@ -73,8 +76,8 @@ end
 RCGs = RCGs(:) * (10^27);
 FFZs = FFZs(:) < 625;
 
-latsZero = nonzeros(specs(:,1) .* underAngs(:, 1));
-lonZero = nonzeros(specs(:,2) .* underAngs(:, 1));
+latsZero = nonzeros(specs(:,1) .* (RCGs > 3) .* FFZs);
+lonZero = nonzeros(specs(:,2) .* (RCGs > 3) .* FFZs);
 
 specs = [latsZero lonZero];
 specs = sortrows(specs,1);
