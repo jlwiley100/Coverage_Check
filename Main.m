@@ -8,10 +8,11 @@ clear; clc;
 angle = 60;
 
 % number of recievers
-n_rx = 8;
+n_rx = 6;
 
 % target folder in outputs folder
-target_folder = '8_500_80_1_linux';
+target_folder = '6_1000_80_1_L5';
+band = "L5";
 
 %% INITIALIZATION
 success_count = 0;
@@ -19,7 +20,7 @@ fail_count = 0;
 
 % get sim data
 output_folder = 'outputs/';
-spec = loadSpecDat(strcat(output_folder, target_folder, "/"),n_rx);
+spec = loadSpecDat(strcat(output_folder, target_folder, "/"), n_rx, band);
 
 res = 25;
 latPerKm = 1/110.574;

@@ -1,4 +1,4 @@
-function specs = loadSpecDat(output_folder,n_rx)
+function specs = loadSpecDat(output_folder,n_rx, band)
 
 wgs84 = wgs84Ellipsoid("meter");
 
@@ -14,7 +14,19 @@ RxName = 'CYG';
 TxName = {'GPS', 'Galileo'};
 nRx = n_rx;
 nTx = length(TxName);
-cTc = 3*1e5/(1.023*1e6);
+
+if nargin < 3
+    band = "L1";
+end
+
+if band == "L1"
+    cTc = 3*1e5/(1.023*1e6);
+elseif band == "L2"
+    cTc = 3*1e5/(1.023*1e6);
+elseif band == "L5"
+    cTc = 3*1e5/(1.023*1e6) / 10;
+end
+
 
 %% GET DIRECTORIES
 dir_out = output_folder;
@@ -62,20 +74,37 @@ for iRx = 1 : nRx
         % km
         % TODO: Check if Garrison's diffuse FFZ seems correct
         h = Rsr .* sind(90 - angs) ./ 1000;
-        a = sqrt((cTc.*h)./(cosd(angs).^3));
-        b = sqrt((cTc.*h)./(cosd(angs)));
+        cosangs = cosd(angs);
+        a = sqrt((cTc.*h)./(cosangs.^3));
+        b = sqrt((cTc.*h)./(cosangs));
         
         ffz = pi.*a.*b;
 
-        RCGs = [RCGs; 10.^(gains./10)./(Rts.^2 .* Rsr.^2)];
+        % Ideal case
+        RCGs = [RCGs; 10.^(13.8./10)./(Rts.^2 .* Rsr.^2)];
+        
+        % General case
+        %RCGs = [RCGs; 10.^(gains./10)./(Rts.^2 .* Rsr.^2)];
         FFZs = [FFZs; ffz];
 
         % Latitudes and longitudes at exactly 0 will not be included. To
-        % ensure that they will be, we perturb the latitude and longitude
-        % by a small value.
+        % ensure that they will be, we perturb those latitude and longitude
+        % by a small value, respective of their sign.
         % LLA of specular points
-        lats = temp(:,9) + 0.0001;
-        longs = temp(:,10) + 0.0001;
+        lats = temp(:,9);
+        longs = temp(:,10);
+
+        lats(any(isnan(lats),2),:)=0.003;
+        longs(any(isnan(lats),2),:)=0.003;
+        lats(any(isnan(longs),2),:)=0.003;
+        longs(any(isnan(longs),2),:)=0.003;
+       
+        lats(lats == 0) = 0.003;
+        longs(longs == 0) = 0.003;
+
+        %lats = lats + 0.003;
+        %longs = longs + 0.003;
+
         specs = [specs; lats, longs];  
     end
 end
