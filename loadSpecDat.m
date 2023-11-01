@@ -94,6 +94,7 @@ for iRx = 1 : nRx
         lats = temp(:,9);
         longs = temp(:,10);
 
+        % TODO: Consider throwing out these
         lats(any(isnan(lats),2),:)=0.003;
         longs(any(isnan(lats),2),:)=0.003;
         lats(any(isnan(longs),2),:)=0.003;
