@@ -67,12 +67,8 @@ for iRx = 1 : nRx
         Rsr = sqrt((Xrx - Xsp).^2 + (Yrx - Ysp).^2 + (Zrx - Zsp).^2);
 
         % Specular FFZ of specular points
-        %a = temp(:, 15) ./ 1000;
-        %b = temp(:, 16) ./ 1000;
-
         % Calculations
         % km
-        % TODO: Check if Garrison's diffuse FFZ seems correct
         h = Rsr .* sind(90 - angs) ./ 1000;
         cosangs = cosd(angs);
         a = sqrt((cTc.*h)./(cosangs.^3));
@@ -102,9 +98,6 @@ for iRx = 1 : nRx
        
         lats(lats == 0) = 0.003;
         longs(longs == 0) = 0.003;
-
-        %lats = lats + 0.003;
-        %longs = longs + 0.003;
 
         specs = [specs; lats, longs];  
     end

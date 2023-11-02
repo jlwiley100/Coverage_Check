@@ -8,10 +8,10 @@ clear; clc;
 angle = 60;
 
 % number of recievers
-n_rx = 6;
+n_rx = 12;
 
 % target folder in outputs folder
-target_folder = '6_1000_80_1_L5';
+target_folder = '12_500_80_1_L5';
 band = "L5";
 
 %% INITIALIZATION
