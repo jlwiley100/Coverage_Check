@@ -11,8 +11,8 @@ angle = 60;
 n_rx = 12;
 
 % target folder in outputs folder
-target_folder = '12_500_80_1_L5';
-band = "L5";
+target_folderL5 = '12_500_80_1_L5';
+target_folderL1 = '12_500_80_1_L1';
 
 %% INITIALIZATION
 success_count = 0;
@@ -20,7 +20,9 @@ fail_count = 0;
 
 % get sim data
 output_folder = 'outputs/';
-spec = loadSpecDat(strcat(output_folder, target_folder, "/"), n_rx, band);
+specL5 = loadSpecDat(strcat(output_folder, target_folderL5, "/"), n_rx, "L5");
+specL1 = loadSpecDat(strcat(output_folder, target_folderL1, "/"), n_rx, "L1");
+spec = [L5;L1];
 
 res = 25;
 latPerKm = 1/110.574;
