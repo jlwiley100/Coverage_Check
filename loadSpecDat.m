@@ -57,7 +57,7 @@ for iRx = 1 : nRx
         alts = temp(:,11);
         angs = temp(:,17);
         
-        gains = 11.88057 + 0.04726165*angs -0.00903862*(angs.^2);
+        gains = 12.77803 + 0.03126683*angs -0.01027357*(angs.^2);
 
        
 
