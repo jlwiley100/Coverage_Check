@@ -55,10 +55,11 @@ for iRx = 1 : nRx
         lats = temp(:,9);
         longs = temp(:,10);
         alts = temp(:,11);
-        
-        gains = temp(:, 13);
-
         angs = temp(:,17);
+        
+        gains = 11.88057 + 0.04726165*angs -0.00903862*(angs.^2);
+
+       
 
         [Xsp, Ysp, Zsp] = geodetic2ecef(wgs84, lats, longs, alts);
 
