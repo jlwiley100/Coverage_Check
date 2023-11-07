@@ -20,11 +20,11 @@ if nargin < 3
 end
 
 if band == "L1"
-    cTc = 3*1e5/(1.023*1e6);
+    cTc = 3*1e5/(1.023*1e6) / 2;
 elseif band == "L2"
-    cTc = 3*1e5/(1.023*1e6);
+    cTc = 3*1e5/(1.023*1e6) / 2;
 elseif band == "L5"
-    cTc = 3*1e5/(1.023*1e6) / 10;
+    cTc = 3*1e5/(1.023*1e6) / 10 / 2;
 end
 
 
@@ -71,8 +71,8 @@ for iRx = 1 : nRx
         % km
         h = Rsr .* sind(90 - angs) ./ 1000;
         cosangs = cosd(angs);
-        a = sqrt((cTc.*h)./(cosangs.^3));
-        b = sqrt((cTc.*h)./(cosangs));
+        a = sqrt(2*(cTc.*h)./(cosangs.^3));
+        b = sqrt(2*(cTc.*h)./(cosangs));
         
         ffz = pi.*a.*b;
 
