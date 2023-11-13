@@ -21,9 +21,9 @@ fail_count = 0;
 % get sim data
 output_folder = 'outputs/';
 specL5 = loadSpecDat(strcat(output_folder, target_folderL5, "/"), n_rx, "L5");
-specL1 = loadSpecDat(strcat(output_folder, target_folderL1, "/"), n_rx, "L1");
-spec = [specL5; specL1];
-%spec = specL5;
+%specL1 = loadSpecDat(strcat(output_folder, target_folderL1, "/"), n_rx, "L1");
+%spec = [specL5; specL1];
+spec = specL5;
 
 spec = sortrows(spec, 1);
 

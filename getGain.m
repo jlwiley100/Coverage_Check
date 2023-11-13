@@ -6,8 +6,8 @@ a2 = [0,30];
 a3 = [-30,0];
 a4 = [0,-30];
 %x and y of specular point on graph
-x = azimuths.*cosd(90-elevations);
-y = azimuths.*sind(90-elevations);
+x = (90-elevations).*cosd(azimuths);
+y = (90-elevations).*sind(azimuths);
 specPt = [x,y];
 
 %find closest antenna 

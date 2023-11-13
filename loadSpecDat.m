@@ -55,14 +55,13 @@ for iRx = 1 : nRx
         lats = temp(:,9);
         longs = temp(:,10);
         alts = temp(:,11);
-        angs = temp(:,17);
+        angs = temp(:,19);
         %% TODO
-        [azimuths,elevation] = temp(:,??);
+        azimuths = temp(:,12);
+        elevation = temp(:,13);
         gains = getGain(azimuths,elevation);
         %%
        
-       
-
         [Xsp, Ysp, Zsp] = geodetic2ecef(wgs84, lats, longs, alts);
 
         % Meters
