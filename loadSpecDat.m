@@ -78,10 +78,7 @@ for iRx = 1 : nRx
         
         ffz = pi.*a.*b;
 
-        % Ideal case
-        %RCGs = [RCGs; 10.^(13.8./10)./(Rts.^2 .* Rsr.^2)];
-        
-        % General case
+        % Calculate range-corrected gain and diffuse first-fresnel zone
         RCGs = [RCGs; 10.^(gains./10)./(Rts.^2 .* Rsr.^2)];
         FFZs = [FFZs; ffz];
 
