@@ -56,13 +56,11 @@ for iRx = 1 : nRx
         longs = temp(:,10);
         alts = temp(:,11);
         angs = temp(:,17);
-        
-        %right and left gain patterns
-        gr = 12.77803 + 0.03126683*(angs-30) -0.01027357*((angs-30).^2);
-        gl = 12.77803 + 0.03126683*(angs+30) -0.01027357*((angs+30).^2);
-        
-        %take the max of the right and left gain pattern
-        gains = max([gr,gl],[],2);
+        %% TODO
+        [azimuths,elevation] = temp(:,??);
+        gains = getGain(azimuths,elevation);
+        %%
+       
        
 
         [Xsp, Ysp, Zsp] = geodetic2ecef(wgs84, lats, longs, alts);
